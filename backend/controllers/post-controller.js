@@ -10,7 +10,7 @@ exports.list = (req, res, next) => Promise.resolve()
   .catch(err => next(err))
 
 exports.add = (req, res, next) => Promise.resolve()
-  .then(() => new Post(req.body.post).save())
+  .then(() => new Post(req.body).save())
   .then((data) => {
     res.status(201).end()
     //res.redirect(`/v1/posts/${data._id}`)
@@ -33,7 +33,7 @@ exports.show = (req, res, next) => Promise.resolve()
   .catch(err => next(err))
 
 exports.save = (req, res, next) => Promise.resolve()
-  .then(() => Post.findByIdAndUpdate(req.params.id, req.body.post, {
+  .then(() => Post.findByIdAndUpdate(req.params.id, req.body, {
     runValidators: true
   }))
   .then((data) => {

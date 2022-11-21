@@ -39,7 +39,8 @@ module.exports = {
     })
     .catch(err => next(err)),
   save: (req, res, next) => Promise.resolve()
-    .then(() => Comment.findByIdAndUpdate(req.params.id, req.body.comment, {
+  //req.body.comments
+    .then(() => Comment.findByIdAndUpdate(req.params.id, req.body, {
       runValidators: true
     }))
     .then((data) => {
