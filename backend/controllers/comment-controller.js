@@ -16,7 +16,7 @@ module.exports = {
     })
     .catch(err => next(err)),
   add: (req, res, next) => Promise.resolve()
-    .then(() => new Comment(Object.assign(req.body.comment, { post: res.locals.post.id })).save())
+    .then(() => new Comment(Object.assign(req.body, { post: res.locals.post.id })).save())
     .then((comment) => Post.findById(comment.post)
       .then(post => Object.assign(post, { comments: [...post.comments, comment._id] }))
       .then(post => Post.findByIdAndUpdate(comment.post, post))
