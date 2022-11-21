@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./index.js",
-    "dev": "node ./node_modules/nodemon/bin/nodemon ."
+    "dev": "node ./node_modules/nodemon/bin/nodemon .",
+    "swagger-autogen":"node swagger.js"
   },
   "author": "",
   "license": "ISC",
@@ -22,9 +23,12 @@
     "method-override": "^3.0.0",
     "mongoose": "^6.7.2",
     "path": "^0.12.7",
-    "swagger": "^0.7.5"
+    "swagger": "^0.7.5",
+    "swagger-jsdoc": "^6.2.5",
+    "swagger-ui-express": "^4.6.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "swagger-autogen": "^2.22.0"
   }
 }

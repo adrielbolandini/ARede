@@ -1,14 +1,24 @@
 const path = require('path')
 const express = require('express')
 const bodyParser = require('body-parser')
-const methodOverride = require('method-override')
 const session = require('express-session')
 const createError = require('http-errors')
 const routers = require('./routers')
 const { model } = require('mongoose')
 const { Connection } = require('./models')
+const cors = require('cors');
+const helmet = require('helmet');
+const swaggerUi = require('swagger-ui-express');
+const swaggerAutogen = require('swagger-autogen');
+const swaggerFile = require('./swagger_output.json')
 
 const app = express()
+
+app.use(helmet())
+
+app.use(cors())
+
+app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
 app.use(express.urlencoded({
     extended: true
@@ -16,9 +26,7 @@ app.use(express.urlencoded({
 
 app.use(bodyParser.json())
 
-app.use(methodOverride('_method'))
-
-app.use(express.static(path.join(__dirname, 'public')))
+//app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(session({
   resave: false, // don't save session if unmodified
