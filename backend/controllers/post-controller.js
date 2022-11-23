@@ -10,7 +10,8 @@ exports.list = (req, res, next) => Promise.resolve()
   .catch(err => next(err))
 
 exports.add = (req, res, next) => Promise.resolve()
-  .then(() => new Post(req.body).save())
+  .then(console.log(`${req.body} e ${req.user}`))
+  .then(() => new Post({...req.body, user : req.user._id}).save())
   .then((data) => {
     res.status(201).end()
     //res.redirect(`/v1/posts/${data._id}`)
@@ -60,7 +61,8 @@ exports.edit = (req, res, next) => Promise.resolve()
   .catch(err => next(err))
 
 exports.new = (req, res, next) => Promise.resolve()
+  .then(console.log(req.local))
   .then((data) => {
-    res.send({ post: new Post(res.locals.post) })
+    res.send({ post: new Post({...res.locals.post, user:req.user._id}) })
   }).status(201)
   .catch(err => next(err))

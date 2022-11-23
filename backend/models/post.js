@@ -17,6 +17,10 @@ const postSchema = new Schema({
       message: 'nao pode usar a palavra {VALUE}'
     }
   },
+  user:{
+    type:Schema.Types.ObjectId,
+    ref:'User'
+  },
   comments: [{
     type: Schema.Types.ObjectId,
     ref: 'Comment'

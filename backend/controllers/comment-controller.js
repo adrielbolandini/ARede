@@ -16,7 +16,7 @@ module.exports = {
     })
     .catch(err => next(err)),
   add: (req, res, next) => Promise.resolve()
-    .then(() => new Comment(Object.assign(req.body, { post: res.locals.post.id })).save())
+    .then(() => new Comment(Object.assign(req.body, { post: res.locals.post.id, user:req.user._id })).save())
     .then((comment) => Post.findById(comment.post)
       .then(post => Object.assign(post, { comments: [...post.comments, comment._id] }))
       .then(post => Post.findByIdAndUpdate(comment.post, post))
@@ -65,7 +65,7 @@ module.exports = {
     .catch(err => next(err)),
   new: (req, res, next) => Promise.resolve()
     .then((data) => {
-      res.send({ comment: new Comment(res.locals.comment) }).status(201)
+      res.send({ comment: new Comment({...res.locals.comment,user:req.user._id}) }).status(201)
     })
     .catch(err => next(err))
 }

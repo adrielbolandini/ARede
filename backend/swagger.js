@@ -33,4 +33,6 @@ const doc = {
 const outputFile = './swagger_output.json'
 const endpointsFiles = ['./routers.js' ]
 
-swaggerAutogen(outputFile, endpointsFiles,doc)
+swaggerAutogen(outputFile, endpointsFiles,doc).then(()=>{
+    require('./index.js')
+})

@@ -11,6 +11,11 @@ const helmet = require('helmet');
 const swaggerUi = require('swagger-ui-express');
 const swaggerAutogen = require('swagger-autogen');
 const swaggerFile = require('./swagger_output.json')
+const routersLogin = require('./routersLogin')
+const {User:userModel} = require ('./models')
+
+const jwt = require('jsonwebtoken')
+const ACCESS_TOKEN_SECRET = "kamehameha"
 
 const app = express()
 
@@ -26,13 +31,30 @@ app.use(express.urlencoded({
 
 app.use(bodyParser.json())
 
-//app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(session({
   resave: false, // don't save session if unmodified
   saveUninitialized: false, // don't create session until something stored
   secret: 'some secret here'
 }))
+
+//ver o user
+
+function authenticatetoken(req,res,next){
+  const authHeader = req.headers.authorization
+  const token = authHeader && authHeader.toString()
+  if (token ==null ) return next(createError(401))
+  jwt.verify(token,ACCESS_TOKEN_SECRET, (err,user)=>{
+    if(err) return next(createError(403))
+    userModel.findOne({user})
+    .then((u)=>{
+      req.user=u
+      next()
+    })
+    .catch(error =>next(error))
+  })
+}
 
 // take the errors from session and clean
 app.use(function (req, res, next) {
@@ -53,7 +75,9 @@ app.use((req, res, next) => Connection
   .catch(err => next(err))
 )
 
-app.get('/', (req, res) => res.redirect('/v1/posts'))
-app.use('/v1', routers)
+//app.get('/', (req, res) => res.redirect('/v1/posts'))
+app.use('/',routersLogin)
+app.use('/v1', authenticatetoken,routers)
+
 
 module.exports = app

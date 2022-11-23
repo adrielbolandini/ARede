@@ -2,10 +2,23 @@ const express = require('express')
 
 const {
   PostController,
-  CommentController
+  CommentController,
+  UserController
 } = require('./controllers')
 
 const router = express.Router()
+
+router
+  .route('/signup')
+  .post(UserController.createUser)
+
+router
+  .route('/login')
+  .post(UserController.login)
+
+router
+  .route('/users')
+  .get(UserController.show)
 
 router
   .route('/posts')
