@@ -1,3 +1,5 @@
 exports.PostController = require('./post-controller.js')
 exports.CommentController = require('./comment-controller.js')
-exports.UserController = require('./user-controller.js')
+exports.SecurityController = require('./security-controller.js')
+exports.ProfileController = require('./profile-controller')
+exports.FeedController = require('./feed-controller')

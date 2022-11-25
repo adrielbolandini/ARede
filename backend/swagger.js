@@ -11,10 +11,27 @@ const doc = {
     schemes: ['http', 'https'],
     consumes: ['application/json'],
     produces: ['application/json'],
+    securityDefinitions: {
+        JWT: {
+          description: 'Bearer <token>',
+          type: 'apiKey',
+          in: 'header',
+          name: 'Authorization',
+        },
+      },
     tags: [
         {
             "name": "Posts",
-            "description": "Endpoints"
+            "description": "Endpoints Posts"
+        },{
+            "name": "Profile",
+            "description": "Endpoints Profile",
+        },{
+            "name": "Comments",
+            "description": "Endpoints Comments"
+        },{
+            "name": "Feed",
+            "description": "Endpoints Feed"
         }
     ],
     definitions: {
@@ -31,7 +48,7 @@ const doc = {
 
 
 const outputFile = './swagger_output.json'
-const endpointsFiles = ['./routers.js' ]
+const endpointsFiles = ['./app.js']
 
 swaggerAutogen(outputFile, endpointsFiles,doc).then(()=>{
     require('./index.js')

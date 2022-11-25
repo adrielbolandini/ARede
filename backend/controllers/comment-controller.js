@@ -1,5 +1,5 @@
 const createError = require('http-errors')
-const { Comment, Post } = require('../models')
+const { Comment, Post,Profile } = require('../models')
 module.exports = {
   beforeAllById: (req, res, next, id) => Promise.resolve()
     .then(() => {
@@ -8,7 +8,7 @@ module.exports = {
     })
     .catch(err => next(err)),
   list: (req, res, next) => Promise.resolve()
-    .then(() => Comment.find({ post: res.locals.post.id }))
+    .then(() => Comment.find({ post: res.locals.post.id }).populate('profile'))
     .then((data) => {
       res.send({
         comments: data
@@ -16,7 +16,7 @@ module.exports = {
     })
     .catch(err => next(err)),
   add: (req, res, next) => Promise.resolve()
-    .then(() => new Comment(Object.assign(req.body, { post: res.locals.post.id, user:req.user._id })).save())
+    .then(() => new Comment(Object.assign(req.body, { post: res.locals.post.id, profile:req.user.profile._id })).save())
     .then((comment) => Post.findById(comment.post)
       .then(post => Object.assign(post, { comments: [...post.comments, comment._id] }))
       .then(post => Post.findByIdAndUpdate(comment.post, post))
@@ -65,7 +65,19 @@ module.exports = {
     .catch(err => next(err)),
   new: (req, res, next) => Promise.resolve()
     .then((data) => {
-      res.send({ comment: new Comment({...res.locals.comment,user:req.user._id}) }).status(201)
+      res.send({ comment: new Comment({...res.locals.comment,profile:req.user.profile._id}) }).status(201)
     })
+    .catch(err => next(err)),
+/**
+ * 
+ * @route POST /posts/{postId}/comments/{id}/like 
+ * @param {string} postId.path.require 
+ * @param {string} id.path.require 
+ * @group Cooment 
+ * @security JWT 
+ */  
+  like: (req, res, next) => Promise.resolve()
+    .then(()=> Post.findOneAndUpdate({_id: req.params.id},{$push: {likes:req.user.profile._id}}))
+    .then((data)=> res.status(203).json(data))
     .catch(err => next(err))
 }

@@ -1,5 +1,5 @@
 const createError = require('http-errors')
-const { Connection, User } = require('../models')
+const { Connection, User,Profile } = require('../models')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const ACCESS_TOKEN_SECRET = "kamehameha" //todo
@@ -26,6 +26,8 @@ module.exports = {
   createUser:((req,res,next)=>Promise.resolve()
     .then(()=> bcrypt.hash(req.body.password,10))
     .then((passHashed)=> new User({...req.body,password:passHashed}).save())
+    .then(user => new Profile({name: req.body.name || req.body.user, user:user._id}).save()
+      .then(profile => User.findByIdAndUpdate(user._id,{profile})))
     .then(({data})=> res.status(201).json(data))
     .catch(err => next(err))
   )

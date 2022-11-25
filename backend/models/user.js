@@ -23,9 +23,9 @@ const userSchema = new Schema({
         required: true,
         minLenght: 2
     },
-    following:{
+    profile:{
         type: Schema.Types.ObjectId,
-        ref: "User"
+        ref: "Profile"
     }
 })
 

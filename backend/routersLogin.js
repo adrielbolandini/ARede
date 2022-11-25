@@ -3,21 +3,19 @@ const express = require('express')
 const router = express.Router()
 
 const {
-    PostController,
-    CommentController,
-    UserController
+    SecurityController
   } = require('./controllers')
 
 router
   .route('/signup')
-  .post(UserController.createUser)
+  .post(SecurityController.createUser)
 
 router
   .route('/login')
-  .post(UserController.login)
+  .post(SecurityController.login)
 
 router
   .route('/users')
-  .get(UserController.show)
+  .get(SecurityController.show)
 
 module.exports = router

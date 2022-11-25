@@ -14,6 +14,7 @@ const swaggerFile = require('./swagger_output.json')
 const routersLogin = require('./routersLogin')
 const {User:userModel} = require ('./models')
 
+
 const jwt = require('jsonwebtoken')
 const ACCESS_TOKEN_SECRET = "kamehameha"
 
@@ -77,7 +78,10 @@ app.use((req, res, next) => Connection
 
 //app.get('/', (req, res) => res.redirect('/v1/posts'))
 app.use('/',routersLogin)
-app.use('/v1', authenticatetoken,routers)
+app.use('/v1', authenticatetoken,routers
+/*#swagger.security = [{
+  "bearerAuth": []
+}]*/)
 
 
 module.exports = app

@@ -10,13 +10,33 @@
   "tags": [
     {
       "name": "Posts",
-      "description": "Endpoints"
+      "description": "Endpoints Posts"
+    },
+    {
+      "name": "Profile",
+      "description": "Endpoints Profile"
+    },
+    {
+      "name": "Comments",
+      "description": "Endpoints Comments"
+    },
+    {
+      "name": "Feed",
+      "description": "Endpoints Feed"
     }
   ],
   "schemes": [
     "http",
     "https"
   ],
+  "securityDefinitions": {
+    "JWT": {
+      "description": "Bearer <token>",
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization"
+    }
+  },
   "consumes": [
     "application/json"
   ],
@@ -24,34 +44,241 @@
     "application/json"
   ],
   "paths": {
-    "/posts": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      },
+    "/signup": {
       "post": {
         "description": "",
         "parameters": [],
-        "responses": {
-          "201": {
-            "description": "Created"
+        "responses": {},
+        "security": [
+          {
+            "bearerAuth": []
           }
-        }
+        ]
       }
     },
-    "/posts/new": {
+    "/login": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {},
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/users": {
       "get": {
         "description": "",
         "parameters": [],
+        "responses": {},
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/profile": {
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Profile"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/profile/followers/{id}": {
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1profiles/search?q={q}": {
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/profile/follow/{id}": {
+      "post": {
+        "tags": [
+          "Profile"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/feed": {
+      "get": {
+        "tags": [
+          "Feed"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/posts": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/posts/new": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
-    "/posts/{id}": {
+    "/v1/posts/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -60,9 +287,23 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "put": {
         "description": "",
@@ -72,9 +313,19 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {},
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "delete": {
         "description": "",
@@ -84,12 +335,22 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {},
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
-    "/posts/{id}/edit": {
+    "/v1/posts/{id}/edit": {
       "get": {
         "description": "",
         "parameters": [
@@ -98,16 +359,50 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
-    "/{postId}/comments": {
+    "/v1/posts/{id}/like": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/{postId}/comments": {
       "get": {
         "description": "",
         "parameters": [
@@ -116,9 +411,19 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {},
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "post": {
         "description": "",
@@ -128,12 +433,22 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {},
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
-    "/{postId}/comments/new": {
+    "/v1/{postId}/comments/new": {
       "get": {
         "description": "",
         "parameters": [
@@ -142,16 +457,26 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
-    "/{postId}/comments/{id}": {
+    "/v1/{postId}/comments/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -166,13 +491,23 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "put": {
         "description": "",
@@ -188,9 +523,19 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {},
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "delete": {
         "description": "",
@@ -206,12 +551,22 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {},
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
-    "/{postId}/comments/{id}/edit": {
+    "/v1/{postId}/comments/{id}/edit": {
       "get": {
         "description": "",
         "parameters": [
@@ -226,13 +581,53 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/{postId}/comments/{id}/like": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     }
   },

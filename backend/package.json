@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./index.js",
     "dev": "node ./node_modules/nodemon/bin/nodemon .",
-    "swagger":"node swagger.js"
+    "swagger": "node swagger.js"
   },
   "author": "",
   "license": "ISC",

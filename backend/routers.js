@@ -3,26 +3,61 @@ const express = require('express')
 const {
   PostController,
   CommentController,
-  UserController
+  FeedController,
+  ProfileController
 } = require('./controllers')
 
 const router = express.Router()
 
 router
-  .route('/signup')
-  .post(UserController.createUser)
+  .route('/profile')
+  .get(
+    /**
+   *  #swagger.tags = ['Profile']
+   */
+    ProfileController.show
+    )
+  .post(
+  /**
+  *  #swagger.tags = ['Profile']
+  */
+    ProfileController.update)
 
 router
-  .route('/login')
-  .post(UserController.login)
+  .route('/profile/followers/:id')
+  .get(
+  /**
+   *  #swagger.tags = ['Profile']
+   */
+    ProfileController.relatives)
 
 router
-  .route('/users')
-  .get(UserController.show)
+  .route('profiles/search?q={q}')
+  .get(
+  /**
+  *  #swagger.tags = ['Profile']
+  */ProfileController.search)
+
+router
+  .route('/profile/follow/:id')
+  .post(
+  /**
+   *  #swagger.tags = ['Profile']
+  */
+  ProfileController.newrelative)
+
+router
+  .route('/feed')
+  .get(
+  /**
+  *  #swagger.tags = ['Feed']
+ */
+    FeedController.list)
 
 router
   .route('/posts')
-  .get(PostController.list)
+  .get(
+  PostController.list)
   .post(PostController.add)
 router
   .route('/posts/new')
@@ -35,6 +70,10 @@ router
 router
   .route('/posts/:id/edit')
   .get(PostController.edit)
+
+router
+  .route('/posts/:id/like')
+  .post(PostController.like)
 
 const nRouter = express.Router()
 
@@ -54,6 +93,10 @@ nRouter
 nRouter
   .route('/:postId/comments/:id/edit')
   .get(CommentController.edit)
+
+nRouter
+  .route('/:postId/comments/:id/like')
+  .get(CommentController.like)
 
 router.use('/posts', nRouter)
 
