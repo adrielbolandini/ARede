@@ -50,9 +50,7 @@
         "parameters": [],
         "responses": {},
         "security": [
-          {
-            "bearerAuth": []
-          }
+          {}
         ]
       }
     },
@@ -62,9 +60,7 @@
         "parameters": [],
         "responses": {},
         "security": [
-          {
-            "bearerAuth": []
-          }
+          {}
         ]
       }
     },
@@ -74,9 +70,7 @@
         "parameters": [],
         "responses": {},
         "security": [
-          {
-            "bearerAuth": []
-          }
+          {}
         ]
       }
     },
@@ -96,7 +90,7 @@
         "responses": {},
         "security": [
           {
-            "bearerAuth": []
+            "JWT": []
           }
         ]
       },
@@ -115,7 +109,7 @@
         "responses": {},
         "security": [
           {
-            "bearerAuth": []
+            "JWT": []
           }
         ]
       }
@@ -142,7 +136,7 @@
         "responses": {},
         "security": [
           {
-            "bearerAuth": []
+            "JWT": []
           }
         ]
       }
@@ -169,7 +163,7 @@
         "responses": {},
         "security": [
           {
-            "bearerAuth": []
+            "JWT": []
           }
         ]
       }
@@ -196,7 +190,7 @@
         "responses": {},
         "security": [
           {
-            "bearerAuth": []
+            "JWT": []
           }
         ]
       }
@@ -217,7 +211,7 @@
         "responses": {},
         "security": [
           {
-            "bearerAuth": []
+            "JWT": []
           }
         ]
       }
@@ -235,7 +229,7 @@
         "responses": {},
         "security": [
           {
-            "bearerAuth": []
+            "JWT": []
           }
         ]
       },
@@ -251,7 +245,7 @@
         "responses": {},
         "security": [
           {
-            "bearerAuth": []
+            "JWT": []
           }
         ]
       }
@@ -273,7 +267,7 @@
         },
         "security": [
           {
-            "bearerAuth": []
+            "JWT": []
           }
         ]
       }
@@ -301,7 +295,7 @@
         },
         "security": [
           {
-            "bearerAuth": []
+            "JWT": []
           }
         ]
       },
@@ -323,7 +317,7 @@
         "responses": {},
         "security": [
           {
-            "bearerAuth": []
+            "JWT": []
           }
         ]
       },
@@ -345,7 +339,7 @@
         "responses": {},
         "security": [
           {
-            "bearerAuth": []
+            "JWT": []
           }
         ]
       }
@@ -373,7 +367,7 @@
         },
         "security": [
           {
-            "bearerAuth": []
+            "JWT": []
           }
         ]
       }
@@ -397,7 +391,7 @@
         "responses": {},
         "security": [
           {
-            "bearerAuth": []
+            "JWT": []
           }
         ]
       }
@@ -421,7 +415,7 @@
         "responses": {},
         "security": [
           {
-            "bearerAuth": []
+            "JWT": []
           }
         ]
       },
@@ -443,7 +437,7 @@
         "responses": {},
         "security": [
           {
-            "bearerAuth": []
+            "JWT": []
           }
         ]
       }
@@ -471,7 +465,7 @@
         },
         "security": [
           {
-            "bearerAuth": []
+            "JWT": []
           }
         ]
       }
@@ -505,7 +499,7 @@
         },
         "security": [
           {
-            "bearerAuth": []
+            "JWT": []
           }
         ]
       },
@@ -533,7 +527,7 @@
         "responses": {},
         "security": [
           {
-            "bearerAuth": []
+            "JWT": []
           }
         ]
       },
@@ -561,7 +555,7 @@
         "responses": {},
         "security": [
           {
-            "bearerAuth": []
+            "JWT": []
           }
         ]
       }
@@ -595,7 +589,7 @@
         },
         "security": [
           {
-            "bearerAuth": []
+            "JWT": []
           }
         ]
       }
@@ -625,7 +619,7 @@
         "responses": {},
         "security": [
           {
-            "bearerAuth": []
+            "JWT": []
           }
         ]
       }

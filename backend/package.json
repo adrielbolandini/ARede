@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./index.js",
+    "start": "nodemon .",
     "dev": "node ./node_modules/nodemon/bin/nodemon .",
-    "swagger": "node swagger.js"
+    "swagger": "node swagger.js",
+    "docker": "docker-compose down -v --remove-orphans ; docker-compose up -d"
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +24,9 @@
     "method-override": "^3.0.0",
     "mongoose": "^6.7.2",
     "path": "^0.12.7",
+    "rascal": "^16.1.2",
+    "socket.io": "^4.5.4",
+    "socket.io-client": "^4.5.4",
     "swagger": "^0.7.5",
     "swagger-jsdoc": "^6.2.5",
     "swagger-ui-express": "^4.6.0"

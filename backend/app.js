@@ -13,6 +13,7 @@ const swaggerAutogen = require('swagger-autogen');
 const swaggerFile = require('./swagger_output.json')
 const routersLogin = require('./routersLogin')
 const {User:userModel} = require ('./models')
+const pubsub = require('./pubsub')
 
 
 const jwt = require('jsonwebtoken')
@@ -20,7 +21,7 @@ const ACCESS_TOKEN_SECRET = "kamehameha"
 
 const app = express()
 
-app.use(helmet())
+//app.use(helmet())
 
 app.use(cors())
 
@@ -76,11 +77,14 @@ app.use((req, res, next) => Connection
   .catch(err => next(err))
 )
 
+app.use(pubsub.pub)
+
 //app.get('/', (req, res) => res.redirect('/v1/posts'))
-app.use('/',routersLogin)
+app.use('/',routersLogin
+/*#swagger.security = [{}]*/)
 app.use('/v1', authenticatetoken,routers
 /*#swagger.security = [{
-  "bearerAuth": []
+  "JWT":[]
 }]*/)
 
 

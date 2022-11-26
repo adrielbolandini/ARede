@@ -20,6 +20,7 @@ module.exports = {
     .then((comment) => Post.findById(comment.post)
       .then(post => Object.assign(post, { comments: [...post.comments, comment._id] }))
       .then(post => Post.findByIdAndUpdate(comment.post, post))
+      .then(args=>req.publish('comment', [args.profile],args))
       .then(() => comment)
     )
     .then(() => {
@@ -78,6 +79,7 @@ module.exports = {
  */  
   like: (req, res, next) => Promise.resolve()
     .then(()=> Post.findOneAndUpdate({_id: req.params.id},{$push: {likes:req.user.profile._id}}))
+    .then(args=> req.publish('comment-like', [args.profile],args))
     .then((data)=> res.status(203).json(data))
     .catch(err => next(err))
 }

@@ -8,6 +8,12 @@ services:
       - 27017:27017
     networks:
       - mynet
+  rabbitmq:
+    image: rabbitmq:3.11-management-alpine
+    container_name: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
 
   backend:    
     restart: always
@@ -15,12 +21,15 @@ services:
       context: ./
     volumes:
       - .:/src
+      - /src/node_modules
     depends_on:
       - mongodb
+      - rabbitmq
     environment:
       PORT: 4000
-      MONGO_URL: mongodb://mongodb:27017/mydb
-      ACCESS_TOKEN_SECRET: tokenjwtlalalal
+      AMQP_URL: amqp://guest:guest@rabbitmq:5672
+      MONGODB: mongodb://mongodb:27017/mydb
+      ACCESS_TOKEN_SECRET: kamehameha
     ports:
         - 4000:4000
     networks:
