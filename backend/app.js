@@ -80,8 +80,7 @@ app.use((req, res, next) => Connection
 app.use(pubsub.pub)
 
 //app.get('/', (req, res) => res.redirect('/v1/posts'))
-app.use('/',routersLogin
-/*#swagger.security = [{}]*/)
+app.use('/',routersLogin)
 app.use('/v1', authenticatetoken,routers
 /*#swagger.security = [{
   "JWT":[]

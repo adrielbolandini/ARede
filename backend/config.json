@@ -13,7 +13,7 @@
                     "heartbeat": 10
                 },
                 "socketOptions": {
-                    "timeout": 1000
+                    "timeout": 10000
                 }
             },
             "exchanges":["post_ex"],

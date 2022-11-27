@@ -80,6 +80,6 @@ module.exports = {
   like: (req, res, next) => Promise.resolve()
     .then(()=> Post.findOneAndUpdate({_id: req.params.id},{$push: {likes:req.user.profile._id}}))
     .then(args=> req.publish('comment-like', [args.profile],args))
-    .then((data)=> res.status(203).json(data))
+    .then((data)=> res.status(200).json(data))
     .catch(err => next(err))
 }

@@ -1,6 +1,6 @@
 const createError = require('http-errors')
 const { Connection, User,Profile } = require('../models')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const ACCESS_TOKEN_SECRET = "kamehameha" //todo
 
@@ -19,7 +19,7 @@ module.exports = {
   ),
   update: ((req,res,next)=>Promise.resolve()
     .then(()=>User.findByIdAndUpdate(req.user.id,req.user.body,{runValidators: true}))
-    .then((data)=> res.status(203).json(data))
+    .then((data)=> res.status(200).json(data))
     .catch(err => next(err))
   ),
   search: ((req,res,next)=>Promise.resolve()
@@ -36,7 +36,7 @@ module.exports = {
   newrelative: ((req,res,next)=>Promise.resolve()
         .then(()=> Profile.findOneAndUpdate({_id:req.params.id},{$push:{followers: req.user.profile._id}}))
         .then(()=> Profile.findOneAndUpdate({_id:req.user.profile._id},{$push:{following: req.params.id}}))
-        .then((data)=> res.status(203).json(data))
+        .then((data)=> res.status(200).json(data))
         .catch(err => next(err))
   )
   

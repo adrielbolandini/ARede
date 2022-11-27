@@ -1,6 +1,6 @@
 const createError = require('http-errors')
 const { Connection, User,Profile } = require('../models')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const ACCESS_TOKEN_SECRET = "kamehameha" //todo
 
