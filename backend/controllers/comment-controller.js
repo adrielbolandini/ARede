@@ -46,14 +46,12 @@ module.exports = {
     }))
     .then((data) => {
       res.status(201).end()
-      //res.redirect(`/v1/posts/${res.locals.post.id}/comments/${req.params.id}`)
     })
     .catch(err => next(err)),
   delete: (req, res, next) => Promise.resolve()
     .then(() => Comment.deleteOne({ _id: req.params.id }))
     .then(() => {
       res.status(204).end()
-      //res.redirect(`/v1/posts/${res.locals.post.id}`)
     })
     .catch(err => next(err)),
   edit: (req, res, next) => Promise.resolve()

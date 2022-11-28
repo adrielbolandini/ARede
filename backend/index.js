@@ -3,7 +3,7 @@ const socketio = require("socket.io")
 const jwt = require('jsonwebtoken')
 const {User: UserModel} = require('./models')
 
-const pubsub = require ('./pubsub')
+const pubsub = require ('./lib/pubsub')
 const app = require('./app')
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET || "kamehameha"
 

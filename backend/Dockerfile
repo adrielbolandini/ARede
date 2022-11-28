@@ -5,7 +5,6 @@ COPY package*.json ./
 FROM base as dev
 ENV NODE_ENV=development
 COPY ./* .
-RUN npm install node-gyp
 RUN npm install
 
 CMD ["npm", "start"]

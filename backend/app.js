@@ -13,10 +13,11 @@ const swaggerAutogen = require('swagger-autogen');
 const swaggerFile = require('./swagger_output.json')
 const routersLogin = require('./routersLogin')
 const {User:userModel} = require ('./models')
-const pubsub = require('./pubsub')
+const pubsub = require('./lib/pubsub')
 
 
 const jwt = require('jsonwebtoken')
+const { urlencoded } = require('body-parser')
 const ACCESS_TOKEN_SECRET = "kamehameha"
 
 const app = express()
@@ -27,11 +28,19 @@ app.use(cors())
 
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
-app.use(express.urlencoded({
+/*app.use(express.urlencoded({
     extended: true
-  }))
+  }))*/
 
-app.use(bodyParser.json())
+const urlencodedMiddleware = bodyParser.urlencoded({
+  extended: true
+})
+
+app.use((req,res,next)=>(/^multipart\//i.test(req.get('Content-Type'))) ? next() : urlencodedMiddleware(req,res,next))
+
+app.use(bodyParser.json({
+  defer: true
+}))
 
 app.use(express.static(path.join(__dirname, 'public')))
 
@@ -40,8 +49,6 @@ app.use(session({
   saveUninitialized: false, // don't create session until something stored
   secret: 'some secret here'
 }))
-
-//ver o user
 
 function authenticatetoken(req,res,next){
   const authHeader = req.headers.authorization
@@ -79,7 +86,6 @@ app.use((req, res, next) => Connection
 
 app.use(pubsub.pub)
 
-//app.get('/', (req, res) => res.redirect('/v1/posts'))
 app.use('/',routersLogin)
 app.use('/v1', authenticatetoken,routers
 /*#swagger.security = [{

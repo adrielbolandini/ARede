@@ -36,7 +36,8 @@ router
   .get(
   /**
   *  #swagger.tags = ['Profile']
-  */ProfileController.search)
+  */
+    ProfileController.search)
 
 router
   .route('/profile/follow/:id')

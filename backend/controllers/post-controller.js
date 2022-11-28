@@ -1,5 +1,6 @@
 const createError = require('http-errors')
 const { Post,Profile } = require('../models')
+const upload = require('../lib/upload')
 
 exports.list = (req, res, next) => Promise.resolve()
   .then(() => Post.find({profile:req.user.profile._id}).populate('comments').populate('profile'))
@@ -9,14 +10,14 @@ exports.list = (req, res, next) => Promise.resolve()
   )
   .catch(err => next(err))
 
-exports.add = (req, res, next) => Promise.resolve()
+exports.add = upload.concat([(req, res, next) => Promise.resolve()
   .then(console.log(`${req.body} e ${req.user}`))
   .then(() => new Post({...req.body, profile : req.user.profile._id}).save())
   .then(args=> req.publish('post',req.user.profile.followers,args))
   .then((data) => {
-    res.status(201).end()
+    res.status(201).json(data)
   })
-  .catch(err => next(err))
+  .catch(err => next(err))])
 
 exports.show = (req, res, next) => Promise.resolve()
   .then(() => Post.findById(req.params.id).populate('comments').populate('profile'))

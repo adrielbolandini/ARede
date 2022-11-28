@@ -35,7 +35,11 @@ const postSchema = new Schema({
   likes: [{
     type: Schema.Types.ObjectId,
     ref: 'Profile'
-  }]
+  }],
+  image: {
+    type: Boolean,
+    default:false
+  }
 }, { timestamps: true })
 
 module.exports = model('Post', postSchema)
