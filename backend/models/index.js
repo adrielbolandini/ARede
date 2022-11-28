@@ -3,7 +3,7 @@ const connect = mongoose.connect(
   `${(process.env.MONGODB || 'mongodb://localhost:27017/mydb')}_${process.env.NODE_ENV || 'development'}`,
     // https://mongoosejs.com/docs/connections.html#options
     {
-      serverSelectionTimeoutMS: (!process.env.NODE_ENV) ? 10000 : 30000
+      serverSelectionTimeoutMS: (!process.env.NODE_ENV) ? 30000 : 40000
     } // Keep trying to send operations for 5 seconds
 )
 exports.Post = require('./post.js')

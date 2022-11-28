@@ -18,8 +18,9 @@ module.exports = {
   ),
   login: ((req,res,next)=>Promise.resolve()
   .then(()=>User.findOne({user: req.body.user}))
-  .then((user)=>user? bcrypt.compare(req.body.password, user.password): next(createError(404)))
-  .then((passHashed)=> passHashed ? jwt.sign(req.body.user, ACCESS_TOKEN_SECRET): next(createError(401)))
+  .then((user)=>user? bcrypt.compare(req.body.password, user.password).then(passHashed=>[user._doc,passHashed]): next(createError(404)))
+  .then(([{password:_, ...user},passHashed])=> ({user, passHashed}))
+  .then(([user, passHashed])=> passHashed ? jwt.sign(JSON.stringify(user), ACCESS_TOKEN_SECRET): next(createError(401)))
   .then((accessToken)=>res.status(201).json(accessToken))
   .catch(err => next(err))
   ),

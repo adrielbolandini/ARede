@@ -22,11 +22,11 @@ const config = {
     }
 }
 
-const S3Client = new S3Client(config)
-module.exports= [upload.single('file'), (res,res,next)=>{
+const SEClient = new S3Client(config)
+module.exports= [upload.single('file'), (req,res,next)=>{
     if (req.file) {
         const filename = `${res.user.profile.id}/${req.file.originalname}`
-        return S3Client.send(new PutObjectCommand({
+        return SEClient.send(new PutObjectCommand({
             Bucket: bucketName,
             Key: filename,
             ContentType: req.file.mimetype,
