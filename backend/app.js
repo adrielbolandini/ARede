@@ -12,7 +12,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerAutogen = require('swagger-autogen');
 const swaggerFile = require('./swagger_output.json')
 const routersLogin = require('./routersLogin')
-const {User:userModel} = require ('./models')
+const {User: userModels} = require ('./models')
 const pubsub = require('./lib/pubsub')
 
 
@@ -56,12 +56,12 @@ function authenticatetoken(req,res,next){
   if (token ==null ) return next(createError(401))
   jwt.verify(token,ACCESS_TOKEN_SECRET, (err,user)=>{
     if(err) return next(createError(403))
-    userModel.findOne({user})
-    .then((u)=>{
-      req.user=u
-      next()
-    })
-    .catch(error =>next(error))
+    userModels.findOne({_id: user._id})
+      .then((u)=>{
+        req.user=u
+        next()
+      })
+      .catch(error =>next(error))
   })
 }
 

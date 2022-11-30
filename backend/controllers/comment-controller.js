@@ -16,7 +16,7 @@ module.exports = {
     })
     .catch(err => next(err)),
   add: (req, res, next) => Promise.resolve()
-    .then(() => new Comment(Object.assign(req.body, { post: res.locals.post.id, profile:req.user.profile._id })).save())
+    .then(() => new Comment(Object.assign(req.body, { post: res.locals.post.id, profile:req.user._id })).save())
     .then((comment) => Post.findById(comment.post)
       .then(post => Object.assign(post, { comments: [...post.comments, comment._id] }))
       .then(post => Post.findByIdAndUpdate(comment.post, post))
@@ -64,7 +64,7 @@ module.exports = {
     .catch(err => next(err)),
   new: (req, res, next) => Promise.resolve()
     .then((data) => {
-      res.send({ comment: new Comment({...res.locals.comment,profile:req.user.profile._id}) }).status(201)
+      res.send({ comment: new Comment({...res.locals.comment,profile:req.user._id}) }).status(201)
     })
     .catch(err => next(err)),
 /**
@@ -76,7 +76,7 @@ module.exports = {
  * @security JWT 
  */  
   like: (req, res, next) => Promise.resolve()
-    .then(()=> Post.findOneAndUpdate({_id: req.params.id},{$push: {likes:req.user.profile._id}}))
+    .then(()=> Post.findOneAndUpdate({_id: req.params.id},{$push: {likes:req.user._id}}))
     .then(args=> req.publish('comment-like', [args.profile],args))
     .then((data)=> res.status(200).json(data))
     .catch(err => next(err))

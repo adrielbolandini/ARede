@@ -2,7 +2,7 @@ const createError = require('http-errors')
 const { Connection, User,Profile } = require('../models')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const ACCESS_TOKEN_SECRET = "kamehameha" //todo
+const ACCESS_TOKEN_SECRET = "kamehameha"
 
 module.exports = {
   beforeAll: (req, res, next, id) => Promise.resolve()
@@ -16,14 +16,15 @@ module.exports = {
     .then((data)=>res.status(200).json(data))
     .catch(err => next(err))
   ),
+
   login: ((req,res,next)=>Promise.resolve()
   .then(()=>User.findOne({user: req.body.user}))
-  .then((user)=>user? bcrypt.compare(req.body.password, user.password).then(passHashed=>[user._doc,passHashed]): next(createError(404)))
-  .then(([{password:_, ...user},passHashed])=> ({user, passHashed}))
-  .then(([user, passHashed])=> passHashed ? jwt.sign(JSON.stringify(user), ACCESS_TOKEN_SECRET): next(createError(401)))
-  .then((accessToken)=>res.status(201).json(accessToken))
+  .then((user)=>user? bcrypt.compare(req.body.password, user.password).then(passHashed => [user,passHashed]): next(createError(404)))
+  .then(([user,passHashed])=> passHashed ? jwt.sign(JSON.stringify(user), ACCESS_TOKEN_SECRET): next(createError(401)))
+  .then((accessToken)=>res.status(201).json({accessToken}))
   .catch(err => next(err))
   ),
+
   createUser:((req,res,next)=>Promise.resolve()
     .then(()=> bcrypt.hash(req.body.password,10))
     .then((passHashed)=> new User({...req.body,password:passHashed}).save())

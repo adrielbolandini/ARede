@@ -2,17 +2,19 @@ version: "3.2"
 services:
 
   minio:
-    image: bitnami/minio
+    image: bitnami/minio:latest
     ports:
       - 9000:9000
       - 9001:9001
     
     environment:
-      MINIO_ROOT_USER: user
-      MINIO_ROOT_PASSWORD: passw
+      MINIO_ROOT_USER: user1
+      MINIO_ROOT_PASSWORD: passw12345
       MINIO_SERVER_HOST: localhost
       MINIO_SCHEME: http
       MINIO_API_CORS_ALLOW_ORIGIN: '*'
+    networks:
+      - mynet
 
   mc:
     image: minio/mc
@@ -22,7 +24,7 @@ services:
       - minio
     entrypoint: >
       /bin/sh -C "
-      /usr/bin/mc config host add --api s3v2 minio http://localhost:9000/ user passw;
+      /usr/bin/mc config host add --api s3v2 minio http://localhost:9000/ user1 passw12345;
       /usr/bin/mc rm -r --force minio/first-bucket;
       /usr/bin/mc mb -p minio/first-bucket;
       /usr/bin/mc policy set public minio/first-bucket;
@@ -31,7 +33,7 @@ services:
 
   mongodb:
     image: mongo:latest
-    container_name: mongodb
+    container_name: 'mongodb'
     ports:
       - 27017:27017
     networks:
@@ -47,6 +49,7 @@ services:
 
   backend:    
     restart: always
+    image: api-backend:latest
     build:
       context: ./
     volumes:
@@ -55,6 +58,7 @@ services:
     depends_on:
       - mongodb
       - rabbitmq
+      - minio
     environment:
       PORT: 4000
       AMQP_URL: amqp://rabbitmq:5672

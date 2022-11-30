@@ -57,7 +57,7 @@ exports.edit = (req, res, next) => Promise.resolve()
 exports.new = (req, res, next) => Promise.resolve()
   .then(console.log(req.local))
   .then((data) => {
-    res.send({ post: new Post({...res.locals.post, user:req.user._id}) })
+    res.send({ post: new Post({...res.locals.post, user:req.user.profile._id}) })
   }).status(201)
   .catch(err => next(err))
 

@@ -17,8 +17,8 @@ const config = {
     sslEnabled: false,
     signatureVersion: 'v4',
     credentials: {
-        accessKeyId: process.env.BUCKET_ACCESS_KEY || 'user',
-        secretAccessKey: process.env.BUCKET_SECRET_KEY || 'passw'
+        accessKeyId: process.env.BUCKET_ACCESS_KEY || 'user1',
+        secretAccessKey: process.env.BUCKET_SECRET_KEY || 'passw12345'
     }
 }
 
