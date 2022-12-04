@@ -28,10 +28,6 @@ app.use(cors())
 
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
-/*app.use(express.urlencoded({
-    extended: true
-  }))*/
-
 const urlencodedMiddleware = bodyParser.urlencoded({
   extended: true
 })
