@@ -22,7 +22,8 @@ function AuthForm({formTitle,submitFormButtonText,linkDescription,routeName,subm
         const form = event.target as HTMLFormElement;
         submitFormButtonAction(
             form.elements.user.value, 
-            form.elements.password.value)
+            form.elements.password.value
+        )
     }
 
     return (

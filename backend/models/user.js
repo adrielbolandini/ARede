@@ -7,11 +7,7 @@ const {Schema, model} = require('mongoose')
  * @property {string} password.required
  */
 const userSchema = new Schema({
-    name: {
-        type:String,
-        required: true,
-        minLenght: 2
-    },
+
     user: {
         type:String,
         required: true,
