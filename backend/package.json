@@ -8,7 +8,7 @@
     "start": "nodemon .",
     "dev": "node ./node_modules/nodemon/bin/nodemon .",
     "swagger": "node swagger.js",
-    "docker": "docker-compose down -v --remove-orphans ; docker-compose up -d"
+    "docker": "docker compose down -v --remove-orphans && docker compose up -d"
   },
   "author": "",
   "license": "ISC",

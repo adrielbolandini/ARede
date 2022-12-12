@@ -15,11 +15,20 @@ interface AuthformProps{
     submitFormButtonAction: (user:string, password:string)=>void;
 }
 
+interface AuthFormElements extends HTMLFormControlsCollection{
+    user: HTMLInputElement;
+    password: HTMLInputElement;
+}
+
+interface AuthFormElement extends HTMLFormElement{
+    readonly elements: AuthFormElements;
+}
+
 function AuthForm({formTitle,submitFormButtonText,linkDescription,routeName,submitFormButtonAction}: AuthformProps){
 
-    function handleSubmit(event: FormEvent){
+    function handleSubmit(event: FormEvent<AuthFormElement>){
         event.preventDefault();
-        const form = event.target as HTMLFormElement;
+        const form = event.currentTarget;
         submitFormButtonAction(
             form.elements.user.value, 
             form.elements.password.value
@@ -34,7 +43,7 @@ function AuthForm({formTitle,submitFormButtonText,linkDescription,routeName,subm
             <Text className='mt-1 opacity-50'>{formTitle}</Text>
             </header>
 
-            <form onSubmit={(e)=>handleSubmit(e)} className='flex flex-col gap-4 items-stretch w-full max-w-sm mt-10 '>
+            <form onSubmit={handleSubmit} className='flex flex-col gap-4 items-stretch w-full max-w-sm mt-10 '>
                 <label htmlFor='user' className='flex flex-col gap-2'>
                     <Text>Login</Text>
                     <TextInput.Root>

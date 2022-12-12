@@ -4,19 +4,27 @@ import Button from '../button';
 import { TextInput } from '../textInput';
 import api from '../../services/api';
 
-
 interface createPropsDialogProps{
     closeDialog: ()=>void;
+}
+
+interface PostFormElements extends HTMLFormControlsCollection{
+    title: HTMLInputElement;
+    description: HTMLInputElement;
+}
+
+interface PostFormElement extends HTMLFormElement{
+    readonly elements: PostFormElements;
 }
 
 function CreatePostDialog({closeDialog}: createPropsDialogProps){
 
     const token = localStorage.getItem('accessToken')
 
-    async function handleSubmit(event: FormEvent){
+    async function handleSubmit(event: FormEvent<PostFormElement>){
         
         event.preventDefault();
-        const form = event.target as HTMLFormElement;
+        const form = event.currentTarget;
         const newPost = {
             title : form.elements.title.value,
             description : form.elements.description.value
