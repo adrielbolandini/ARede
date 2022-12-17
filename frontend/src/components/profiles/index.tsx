@@ -23,13 +23,12 @@ function Profiles(){
     useEffect(()=>{
         const getProfiles = async () => {
             try {
-                const response = await api.get("/users", authHeader);
+                const response = await api.get("/v1/users", authHeader);
                 const profiles = response.data.map(profile=>{
                     return {...profile,
                     followButtonDisabled: profile.followers.includes(profileId)}
                 })
                 setProfiles(profiles);
-                //setProfiles([...response.data]);
             } catch(err) {
                 console.error(err);
             }
@@ -41,6 +40,7 @@ function Profiles(){
     async function handleFollow(profileId:string){
         try{
             await api.post(`v1/profile/follow/${profileId}`, null, authHeader);
+            changeButtonStatus(profileId, true);
         } catch(err) {
             console.error(err);
         }
@@ -49,9 +49,22 @@ function Profiles(){
     async function handleUnfollow(profileId:string){
         try{
             await api.post(`v1/profile/follow/${profileId}`, null, authHeader);
+            changeButtonStatus(profileId, false);
         } catch(err) {
             console.error(err);
         }
+    }
+
+    function changeButtonStatus(profileId: string, buttonDisabled: boolean){
+        setProfiles((profiles)=>{
+            const newProfiles = profiles.map((profile)=>{
+                if (profile._id===profileId){
+                    profile.followButtonDisabled = buttonDisabled;
+                }
+                return profile;
+            });
+            return [...newProfiles];
+        });
     }
 
     return(

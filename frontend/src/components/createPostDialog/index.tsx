@@ -3,9 +3,13 @@ import { FormEvent } from 'react';
 import Button from '../button';
 import { TextInput } from '../textInput';
 import api from '../../services/api';
+import Dropzone from '../dropzone';
+import { useState } from 'react';
+import { getAuthHeader } from "../../services/auth";
+import { Post } from '../../model/Post';
 
 interface createPropsDialogProps{
-    closeDialog: ()=>void;
+    postCreated: (post: Post)=>void;
 }
 
 interface PostFormElements extends HTMLFormControlsCollection{
@@ -17,27 +21,35 @@ interface PostFormElement extends HTMLFormElement{
     readonly elements: PostFormElements;
 }
 
-function CreatePostDialog({closeDialog}: createPropsDialogProps){
-
-    const token = localStorage.getItem('accessToken')
+function CreatePostDialog({postCreated}: createPropsDialogProps){
+    const authHeader = getAuthHeader();
+    const token = localStorage.getItem('accessToken');
+    const profile = localStorage.getItem('profile') as string;
+    const [selectedFile, setSelectedFile] = useState<File>();
 
     async function handleSubmit(event: FormEvent<PostFormElement>){
         
         event.preventDefault();
         const form = event.currentTarget;
         const newPost = {
-            title : form.elements.title.value,
-            description : form.elements.description.value
-        };
+            title: form.elements.title.value, 
+            description: form.elements.description.value
+        }
+        const data1 = new FormData();
+        data1.append("title", form.elements.title.value);
+        data1.append("description", form.elements.description.value);
+
+        if (selectedFile){
+            data1.append("file",selectedFile);
+        }
+
 
         try{
-            
-            await api.post('/v1/posts', newPost,{
-                headers:{
-                    Authorization: `${token}`
-                }
-            })
-            closeDialog()
+            console.log(data1);
+            const response = await api.post('/v1/posts', data1, {headers: {
+                Authorization: token,
+            }});
+            postCreated(response.data);
         } catch(err){
             console.log(err);
             alert("Erro ao criar o POST");
@@ -58,6 +70,7 @@ function CreatePostDialog({closeDialog}: createPropsDialogProps){
                         <label htmlFor='description' className='font-semibold'>Compartilhe suas ideias com seus amigos</label>
                         <TextInput.Input id='description' 
                         placeholder='Diga o que você está pensando'/>
+                        <Dropzone onFileUploaded={setSelectedFile}/>
                     </div>
                     <footer className='mt-4 flex justify-end gap-4'>
                         <Button type='submit' className='flex-none w-48'>

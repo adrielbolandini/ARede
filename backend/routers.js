@@ -4,7 +4,8 @@ const {
   PostController,
   CommentController,
   FeedController,
-  ProfileController
+  ProfileController,
+  SecurityController
 } = require('./controllers')
 
 const router = express.Router()
@@ -75,6 +76,10 @@ router
 router
   .route('/posts/:id/like')
   .post(PostController.like)
+
+router
+  .route('/users')
+  .get(SecurityController.show)
 
 const nRouter = express.Router()
 

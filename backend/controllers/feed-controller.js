@@ -15,7 +15,7 @@ const {Post,Profile} = require('../models')
 
 exports.list = ((req,res,next)=> Promise.resolve()
     .then(()=>Profile.findByIdAndUpdate(req.user.profile._id))
-    .then((profile)=> Post.find({profile:{$in: [profile.following, profile._id]}}).populate('profile'))
+    .then((profile)=> Post.find({profile:{$in: profile.following}}).populate('profile'))
     .then((data)=> res.status(200).json(data))
     .catch((err) => next(err))
 )

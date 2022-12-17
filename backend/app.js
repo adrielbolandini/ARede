@@ -14,29 +14,24 @@ const swaggerFile = require('./swagger_output.json')
 const routersLogin = require('./routersLogin')
 const {User: userModels} = require ('./models')
 const pubsub = require('./lib/pubsub')
-
-
 const jwt = require('jsonwebtoken')
-const { urlencoded } = require('body-parser')
 const ACCESS_TOKEN_SECRET = "kamehameha"
 
 const app = express()
 
-//app.use(helmet())
+app.use(helmet())
 
 app.use(cors())
 
+app.use(bodyParser.json({
+  defer: true 
+}))
+
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
-const urlencodedMiddleware = bodyParser.urlencoded({
-  extended: true
-})
+const urlencodedMiddleware = bodyParser.urlencoded({extended: true})
 
-app.use((req,res,next)=>(/^multipart\//i.test(req.get('Content-Type'))) ? next() : urlencodedMiddleware(req,res,next))
-
-app.use(bodyParser.json({
-  defer: true
-}))
+app.use((req,res,next)=>(/^multipart\//i.test(req.get('Content-Type/form-data'))) ? next() : urlencodedMiddleware(req,res,next))
 
 app.use(express.static(path.join(__dirname, 'public')))
 

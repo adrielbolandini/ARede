@@ -14,8 +14,4 @@ router
   .route('/login')
   .post(SecurityController.login)
 
-router
-  .route('/users')
-  .get(SecurityController.show)
-
 module.exports = router

@@ -5,12 +5,16 @@ import * as Dialog from '@radix-ui/react-dialog';
 import CreatePostButton from '../../components/createPostButton';
 import CreatePostDialog from '../../components/createPostDialog';
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Post } from "../../model/Post";
 
-function Menu(){
+interface menuProps{
+    newPostCreated: (post: Post) => void;
+}
+
+function Menu(props: menuProps){
     const[open, setOpen] = useState(false);
 
-    function closeDialog(){
+    function postCreated(post: Post){
         setOpen(false);
     }
 
@@ -29,7 +33,7 @@ function Menu(){
                     <Dialog.Root open={open} onOpenChange={setOpen}>
                         <CreatePostButton />
 
-                        <CreatePostDialog closeDialog={closeDialog}/>
+                        <CreatePostDialog postCreated={postCreated}/>
                     </Dialog.Root>
                 </div>
             </div>
