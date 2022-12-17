@@ -35,18 +35,18 @@ function CreatePostDialog({postCreated}: createPropsDialogProps){
             title: form.elements.title.value, 
             description: form.elements.description.value
         }
-        const data1 = new FormData();
+        /*const data1 = new FormData();
         data1.append("title", form.elements.title.value);
         data1.append("description", form.elements.description.value);
 
         if (selectedFile){
             data1.append("file",selectedFile);
-        }
+        }*/
 
 
         try{
             console.log(data1);
-            const response = await api.post('/v1/posts', data1, {headers: {
+            const response = await api.post('/v1/posts', newPost, {headers: {
                 Authorization: token,
             }});
             postCreated(response.data);
