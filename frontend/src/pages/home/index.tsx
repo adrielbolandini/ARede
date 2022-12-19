@@ -8,8 +8,8 @@ import api from '../../services/api';
 function Home(){
     const authHeader = getAuthHeader()
     const [posts, setPosts] = useState<Post[]>([]);
+    const profile = localStorage.getItem('profile');
     
-    const profile = localStorage.getItem('profile') as string;
     const user = localStorage.getItem('user') as string;
 
     useEffect(()=> {
@@ -19,6 +19,15 @@ function Home(){
         }
         getPosts();
     }, []);
+    useEffect(()=> {
+        async function getProfile(){
+            const profile = localStorage.getItem('profile') as string;
+            return profile;
+        }
+        getProfile();
+    }, []);
+
+
 
     async function handleLike(postId: string){
         try{

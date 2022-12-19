@@ -23,7 +23,7 @@ services:
     depends_on:
       - minio
     entrypoint: >
-      /bin/sh -C "
+      /bin/sh -c "
       /usr/bin/mc config host add --api s3v2 minio http://localhost:9000/ user1 passw12345;
       /usr/bin/mc rm -r --force minio/first-bucket;
       /usr/bin/mc mb -p minio/first-bucket;
@@ -66,8 +66,8 @@ services:
       ACCESS_TOKEN_SECRET: kamehameha
       BUCKET_HOST: http://localhost:9000/
       BUCKET_ENDPOINT: http://minio:9000/
-      BUCKET_ACCESS_KEY: user
-      BUCKET_SECRET_KEY: passw
+      BUCKET_ACCESS_KEY: user1
+      BUCKET_SECRET_KEY: passw12345
     ports:
         - 4000:4000
     networks:

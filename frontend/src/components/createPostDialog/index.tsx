@@ -7,6 +7,7 @@ import Dropzone from '../dropzone';
 import { useState } from 'react';
 import { getAuthHeader } from "../../services/auth";
 import { Post } from '../../model/Post';
+import * as FormData from 'form-data';
 
 interface createPropsDialogProps{
     postCreated: (post: Post)=>void;
@@ -24,7 +25,6 @@ interface PostFormElement extends HTMLFormElement{
 function CreatePostDialog({postCreated}: createPropsDialogProps){
     const authHeader = getAuthHeader();
     const token = localStorage.getItem('accessToken');
-    const profile = localStorage.getItem('profile') as string;
     const [selectedFile, setSelectedFile] = useState<File>();
 
     async function handleSubmit(event: FormEvent<PostFormElement>){
@@ -33,20 +33,19 @@ function CreatePostDialog({postCreated}: createPropsDialogProps){
         const form = event.currentTarget;
         const newPost = {
             title: form.elements.title.value, 
-            description: form.elements.description.value
-        }
-        /*const data1 = new FormData();
-        data1.append("title", form.elements.title.value);
-        data1.append("description", form.elements.description.value);
-
+            description: form.elements.description.value,
+        }   
+        const data = new FormData();
+        data.append('title', form.elements.title.value);
+        data.append('description', form.elements.description.value);
+        
         if (selectedFile){
-            data1.append("file",selectedFile);
-        }*/
-
+            data.append('file',selectedFile);
+        }
 
         try{
-            console.log(data1);
-            const response = await api.post('/v1/posts', newPost, {headers: {
+            //console.log(data1);
+            const response = await api.post('/v1/posts', data, {headers: {
                 Authorization: token,
             }});
             postCreated(response.data);
@@ -61,7 +60,7 @@ function CreatePostDialog({postCreated}: createPropsDialogProps){
             <Dialog.DialogOverlay className='bg-black/60 inset-0 fixed'/>
             <Dialog.Content className='fixed bg-[#2A2634] py-8 px-10 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg w-[480px] shadow-lg shadow-black/25'>
                 <Dialog.Title className='text-2xl font-black'>Novo Post</Dialog.Title>
-                <form className='mt-8 flex flex-col gap-4' onSubmit={handleSubmit}>
+                <form className='mt-8 flex flex-col gap-4' onSubmit={handleSubmit} encType="multipart/form-data" method='post'>
                     <div className='flex flex-col gap-2'>
                         <label htmlFor='title' className='font-semibold'>Título do post</label>
                         <TextInput.Input id='title' 

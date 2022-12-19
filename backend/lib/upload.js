@@ -11,7 +11,7 @@ const upload = multer({
 
 const bucketName = 'first-bucket'
 const config = {
-    regio: 'us-east-1',
+    region: 'us-east-1',
     endpoint: process.env.BUCKET_ENDPOINT || 'http://localhost:9000/',
     forcePathStyle: true,
     sslEnabled: false,
@@ -22,10 +22,11 @@ const config = {
     }
 }
 
+
 const SEClient = new S3Client(config)
 module.exports= [upload.single('file'), (req,res,next)=>{
     if (req.file) {
-        const filename = `${res.user.profile.id}/${req.file.originalname}`
+        const filename = `${req.user.profile._id}/${req.file.originalname}`
         return SEClient.send(new PutObjectCommand({
             Bucket: bucketName,
             Key: filename,

@@ -17,11 +17,14 @@ const pubsub = require('./lib/pubsub')
 const jwt = require('jsonwebtoken')
 const ACCESS_TOKEN_SECRET = "kamehameha"
 
+
 const app = express()
 
 app.use(helmet())
 
 app.use(cors())
+
+app.use(express.urlencoded({extended: false}))
 
 app.use(bodyParser.json({
   defer: true 
@@ -31,7 +34,7 @@ app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
 const urlencodedMiddleware = bodyParser.urlencoded({extended: true})
 
-app.use((req,res,next)=>(/^multipart\//i.test(req.get('Content-Type/form-data'))) ? next() : urlencodedMiddleware(req,res,next))
+app.use((req,res,next)=>(/^multipart\//i.test(req.get('Content-Type: multipart/form-data'))) ? next() : urlencodedMiddleware(req,res,next))
 
 app.use(express.static(path.join(__dirname, 'public')))
 

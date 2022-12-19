@@ -11,7 +11,6 @@ exports.list = (req, res, next) => Promise.resolve()
   .catch(err => next(err))
 
 exports.add = upload.concat([(req, res, next) => Promise.resolve()
-  .then(console.log(`${req.body} e ${req.user}`))
   .then(() => new Post({...req.body, profile : req.user.profile._id}).save())
   .then(args=> req.publish('post',req.user.profile.followers,args))
   .then((data) => {

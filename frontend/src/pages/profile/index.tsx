@@ -11,9 +11,10 @@ function ProfilePage(){
 
     async function newPostCreated(post: Post){
         try {
+            const profile = localStorage.getItem('profile');
             const response = await api.get(`/v1/posts/${post._id}`, authHeader);
             const newPost = response.data;
-            setPosts((posts)=>[newPost, ...posts]);
+            setPosts((posts)=>[newPost, profile, ...posts]);
         } catch(err){console.error(err);}      
     }
     return (

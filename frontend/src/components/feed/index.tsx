@@ -7,7 +7,7 @@ import { Post } from "../../model/Post";
 
 interface feedProps{
     posts: Post[];
-    handleLike: (postId: string)=>void;
+    handleLike: (postId: string, )=>void;
 }
 
 function Feed({posts,handleLike}: feedProps){

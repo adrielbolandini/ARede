@@ -17,7 +17,7 @@ function Menu(props: menuProps){
     function postCreated(post: Post){
         setOpen(false);
     }
-
+    
     return(
         <div className='basis-1/6 border-r border-slate-400 ml-4 pt-4 py-2'>
                 <div className='flex items-center ml-4'>
@@ -33,7 +33,7 @@ function Menu(props: menuProps){
                     <Dialog.Root open={open} onOpenChange={setOpen}>
                         <CreatePostButton />
 
-                        <CreatePostDialog postCreated={postCreated}/>
+                        <CreatePostDialog postCreated={postCreated} />
                     </Dialog.Root>
                 </div>
             </div>
