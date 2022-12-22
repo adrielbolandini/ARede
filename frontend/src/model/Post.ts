@@ -8,4 +8,5 @@ export interface Post{
     comments:[];
     likes: [];
     image: boolean;
+    likebByUser?: boolean;
 }

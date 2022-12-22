@@ -8,15 +8,16 @@ module.exports = {
     })
     .catch(err => next(err)),
   list: (req, res, next) => Promise.resolve()
-    .then(() => Comment.find({ post: res.locals.post.id }).populate('profile'))
+    .then(() => Comment.find({ post: res.locals.post.id }).populate('post').populate('profile'))
     .then((data) => {
-      res.send({
-        comments: data
-      })
+      console.log(data)
+      res.json(
+        data
+      )
     })
     .catch(err => next(err)),
   add: (req, res, next) => Promise.resolve()
-    .then(() => new Comment(Object.assign(req.body, { post: res.locals.post.id, profile:req.user._id })).save())
+    .then(() => new Comment(Object.assign(req.body, { post: res.locals.post.id, profile:req.user._id})).save())
     .then((comment) => Post.findById(comment.post)
       .then(post => Object.assign(post, { comments: [...post.comments, comment._id] }))
       .then(post => Post.findByIdAndUpdate(comment.post, post))

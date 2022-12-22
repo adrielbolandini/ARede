@@ -2,11 +2,14 @@ export const THEME = {
     COLORS:{
         BACKGROUND_900: '#121214',
         BACKGROUND_800: '#181818',
+        BACKGROUND_600: '#202024',
         TEXT: "#FFFFFF",
 
         CAPTION_500: "#71717A",
         CAPTION_400: "#A1A1AA",
-        CAPTION_300: "#D4D4D8"
+        CAPTION_300: "#D4D4D8",
+
+        INPUT: '#7C7C8A'
     },
     FONT_FAMILY:{
         REGULAR: 'Inter_400Regular',

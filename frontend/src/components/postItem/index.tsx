@@ -2,13 +2,16 @@ import { Chat, Heart, UserCircle } from "phosphor-react";
 import Heading from "../headers";
 import Text from "../text";
 import { Post } from "../../model/Post";
+import { Link } from "react-router-dom";
 
 interface postItemProps{
     post: Post;
     handleLike: (postId: string)=>void;
+   
 }
 
 function PostItem({post, handleLike}: postItemProps){
+    const profile = localStorage.getItem('profile');
     return(
         <div className="border-b border-slate-400" key={post._id}>
         <div className="flex flex-row items-center ml-5 my-4">
@@ -16,7 +19,7 @@ function PostItem({post, handleLike}: postItemProps){
             <Text className="font-extrabold ml-2">{post.profile.name}</Text>
         </div>
         <div className="ml-16 flex flex-col gap-2">
-            <Heading size='sm'>{post.title}</Heading>
+            <Link to={`/posts/${post._id}`}><Heading size='sm'>{post.title}</Heading></Link>
             {post.image? (
                 <img src={post.description} alt="Foto" className="max-w-lg rounded-lg" />
             ): (
@@ -34,7 +37,11 @@ function PostItem({post, handleLike}: postItemProps){
             <Text size='sm'>{post.comments.length}</Text>
 
             <div className="hover:bg-red-600 rounded-full p-1" onClick={()=>handleLike(post._id)}>
-                <Heart size={24} className="text-slate-50" />
+                {post.likes.includes(profile) ? 
+                (<Heart size={24} className="text-red-500" weight="fill"/> ) :
+                (<Heart size={24} className="text-slate-50 "/>
+                )}
+                
             </div>
             <Text size='sm'>{post.likes.length}</Text>
         </div>

@@ -8,7 +8,7 @@ import { useState } from "react";
 import { Post } from "../../model/Post";
 
 interface menuProps{
-    newPostCreated: (post: Post) => void;
+    newPostCreated?: (post: Post) => void;
 }
 
 function Menu(props: menuProps){
@@ -16,6 +16,7 @@ function Menu(props: menuProps){
 
     function postCreated(post: Post){
         setOpen(false);
+        props.newPostCreated && props.newPostCreated(post);
     }
     
     return(

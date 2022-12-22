@@ -30,11 +30,7 @@ function CreatePostDialog({postCreated}: createPropsDialogProps){
     async function handleSubmit(event: FormEvent<PostFormElement>){
         
         event.preventDefault();
-        const form = event.currentTarget;
-        const newPost = {
-            title: form.elements.title.value, 
-            description: form.elements.description.value,
-        }   
+        const form = event.currentTarget; 
         const data = new FormData();
         data.append('title', form.elements.title.value);
         data.append('description', form.elements.description.value);
@@ -44,7 +40,6 @@ function CreatePostDialog({postCreated}: createPropsDialogProps){
         }
 
         try{
-            //console.log(data1);
             const response = await api.post('/v1/posts', data, {headers: {
                 Authorization: token,
             }});

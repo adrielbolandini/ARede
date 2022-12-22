@@ -12,6 +12,7 @@ exports.list = (req, res, next) => Promise.resolve()
 
 exports.add = upload.concat([(req, res, next) => Promise.resolve()
   .then(() => new Post({...req.body, profile : req.user.profile._id}).save())
+  .then(post => post.populate({ path: 'profile', populate: { path: 'user' }})) 
   .then(args=> req.publish('post',req.user.profile.followers,args))
   .then((data) => {
     res.status(201).json(data)
@@ -19,11 +20,12 @@ exports.add = upload.concat([(req, res, next) => Promise.resolve()
   .catch(err => next(err))])
 
 exports.show = (req, res, next) => Promise.resolve()
-  .then(() => Post.findById(req.params.id).populate('comments').populate('profile'))
+  .then(() => Post.findById(req.params.id).populate('comments'))
   .then((data) => {
     if (data) {
+      
       (req.accepts(['html', 'json']) === 'json')
-        ? res.json(data)
+        ? res.json(data) 
         : res.send({ post: data })
     } else {
       next(createError(404))

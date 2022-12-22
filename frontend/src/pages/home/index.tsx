@@ -4,17 +4,20 @@ import { getAuthHeader } from '../../services/auth';
 import { useEffect, useState } from 'react';
 import { Post } from '../../model/Post';
 import api from '../../services/api';
+import { likePostApi, unlikePostApi } from '../../services/posts';
 
 function Home(){
     const authHeader = getAuthHeader()
     const [posts, setPosts] = useState<Post[]>([]);
-    const profile = localStorage.getItem('profile');
+    const profile = localStorage.getItem('profile');   
+    
     
     const user = localStorage.getItem('user') as string;
 
     useEffect(()=> {
         async function getPosts(){
             const response = await api.get('v1/feed', authHeader);
+
             setPosts(response.data);
         }
         getPosts();
@@ -29,27 +32,31 @@ function Home(){
 
 
 
-    async function handleLike(postId: string){
-        try{
-            await api.post(`/v1/posts/${postId}/like`, null,authHeader);
-            const newPost = posts
-            .filter((post)=>post._id === postId)
-            .map((post) => {
-                post.likes.push(profile);
-                return post;
-            });
-                
+    async function handleLike(postId: String){
+        const [post, ...rest] = posts.filter(post => post._id===postId)
+            try{
+                if (post && !post.likes.includes(profile)){
+                    const newPost = await likePostApi(post,profile);
+                    changePostItem(newPost);
+                } else {
+                    const newPost = await unlikePostApi(post,profile);
+                    changePostItem(newPost);
+                }
+            } catch (err){
+                console.error(err);
+            }
             
-            setPosts(posts =>{
-                const post = newPost[0]
-                const index = posts.indexOf(post);
-                posts[index] = post;
-                return [...posts];
-            });
-        }catch (err){
-            console.error(err);
-        }
-    }
+        } 
+
+        
+    function changePostItem(newPost :Post){
+        setPosts(posts =>{
+            const post = newPost;
+            const index = posts.indexOf(post);
+            posts[index] = post;
+            return [...posts];
+        })};
+    
 
     async function newPostCreated(post: Post){
         try {

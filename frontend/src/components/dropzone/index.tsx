@@ -24,7 +24,7 @@ function Dropzone({onFileUploaded}:dropzoneProps){
         <div className="flex flex-col mt-4" {...getRootProps()}>
         <input {...getInputProps()} />
         {selectedFileUrl ? (
-            <img src={selectedFileUrl} alt="Arquivo" />
+            <img src={selectedFileUrl} alt="Arquivo" className="max-h-96"/>
         ) : (
             <p className="flex items-center gap-2">
                 <Image size={32} weight="thin"/>
