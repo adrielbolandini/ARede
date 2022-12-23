@@ -31,9 +31,7 @@ interface TextInputIconProps{
 
 function TextInputIcon({children}: TextInputIconProps){
     return(
-        <>
-            {children}
-        </>
+        <>{children}</>
     )
 }
 

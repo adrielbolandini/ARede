@@ -22,7 +22,7 @@ export default function App() {
         <Background>
           <Login />
         </Background>)
-      : <Loading />}
+      : (<Loading />)}
       </SafeAreaProvider>
     );
 }

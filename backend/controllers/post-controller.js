@@ -20,7 +20,7 @@ exports.add = upload.concat([(req, res, next) => Promise.resolve()
   .catch(err => next(err))])
 
 exports.show = (req, res, next) => Promise.resolve()
-  .then(() => Post.findById(req.params.id).populate('comments'))
+  .then(() => Post.findById(req.params.id).populate('comments').populate('profile'))
   .then((data) => {
     if (data) {
       
