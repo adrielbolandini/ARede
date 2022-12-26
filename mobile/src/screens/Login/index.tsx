@@ -1,27 +1,34 @@
-import React from 'react';
-
-import api from '../../services/api';
+import React, {useContext} from 'react';
+import type {NativeStackNavigationProp} from '@react-navigation/native-stack'
 import AuthForm, { Auth } from '../../components/AuthForm';
+import { Text, TouchableOpacity } from 'react-native';
 
-export function Login(){
-    async function handleLogin(auth:Auth){
-        try{
-            const response = await api.post('/login',auth);
-            console.log(response.data)
+import { styles } from './styles';
 
-        } catch (err){
-            console.error(err);
-        }
+import {Context as AuthContext} from '../../../context/AuthContext';
+
+interface LoginProps{
+    navigation: NativeStackNavigationProp<any,any>
+}
+
+export function Login({navigation}: LoginProps){
+    const {login} = useContext(AuthContext);
+
+    function handleRegisterClick(){
+        navigation.navigate("Signup");
     }
 
     return(
-        <AuthForm 
-        formTitle='Faça login para começar'
-        submitFormButtonText='Entrar'
-        submitFormButtonAction={handleLogin}
-        linkDescription='Cadastre-se agora!'
-        routeName=''
-        showNameInput={true}
-        />
+        <>
+            <AuthForm 
+            formTitle='Faça login para começar'
+            submitFormButtonText='Entrar'
+            submitFormButtonAction={login}
+            showNameInput={true}
+            />
+            <TouchableOpacity onPress={handleRegisterClick}>
+                <Text style={styles.link}>Cadastre-se agora!</Text>
+            </TouchableOpacity>
+        </>
     );
 }

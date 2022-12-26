@@ -8,20 +8,17 @@ module.exports = {
     })
     .catch(err => next(err)),
   list: (req, res, next) => Promise.resolve()
-    .then(() => Comment.find({ post: res.locals.post.id }).populate('post').populate('profile'))
+    .then(() => Comment.find({ post: req.params.postId }).populate('post').populate('profile'))
     .then((data) => {
-      console.log(data)
       res.json(
         data
       )
     })
     .catch(err => next(err)),
   add: (req, res, next) => Promise.resolve()
-    //.then(() => new Comment({...req.body, post: res.locals.post.id, profile : req.user.profile._id}).save())
-    .then(() => new Comment({...req.body, post: req.params.postId, profile : req.user.profile._id}).save())//1
+    .then(() => new Comment({...req.body, post: res.locals.post.id, profile : req.user.profile._id}).save())
     .then((comment) => Post.findById(comment.post)
-      //.then(post => Object.assign(post, { comments: [...post.comments, comment._id, comment.profile.name] }))
-      .then(post => post.updateOne({ $push: { comments: comment.id } })) //1
+      .then(post => Object.assign(post, { comments: [...post.comments, comment._id]}))
       .then(post => Post.findByIdAndUpdate(comment.post, post))
       .then(args=>req.publish('comment', [args.profile],args))
       .then(() => comment)

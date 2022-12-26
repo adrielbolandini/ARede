@@ -1,7 +1,7 @@
 const http = require('http')
 const socketio = require("socket.io")
 const jwt = require('jsonwebtoken')
-const {User: UserModel} = require('./models')
+const {User: UserModel, Profile} = require('./models')
 
 const pubsub = require ('./lib/pubsub')
 const app = require('./app')

@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 import { View } from 'react-native';
-import { styles } from '../Background/styles';
 
 interface SpacerProps{
     children ?: ReactNode;
@@ -8,7 +7,7 @@ interface SpacerProps{
 
 export function Spacer(props: SpacerProps){
     return (
-        <View style={styles.container}>
+        <View>
             {props.children}
         </View>
 );

@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose')
+const { Post,Profile } = require('../models')
 /**
  * @typeof Comment
  * @property {string} _id

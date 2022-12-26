@@ -30,9 +30,10 @@ function PostDetail(){
         async function fetchPostDetail(){
             try{
                 const response = await api.get(`v1/posts/${postId}`, getAuthHeader());
+                console.log(response.data)
                 setPostDetail(response.data);
                 setComments(response.data.comments);
-                console.log(response.data)
+                
             } catch(err) {
                 console.error(err);
             }
@@ -67,7 +68,7 @@ function PostDetail(){
             const response = await api.post(`/v1/posts/${postId}/comments`, data ,getAuthHeader());
             const comment = {
                 ...response.data,
-                profile: {_id:profile, name: user}
+                profile: {_id:profile}
             }
             setComments([comment, ...comments]);
             setPostDetail((post) => {
@@ -103,7 +104,7 @@ function PostDetail(){
                                     <li key={comment._id} className='my-8 border rounded-lg'>
                                         <div className='flex flex-row items-center gap-3'>
                                             <UserCircle size={32} weight='light' className='text-slate-50'/>
-                                            <Text size="sm">{comment.profile.name}</Text>
+                                            <Text size="sm">{comment.profile}</Text>
                                         </div>
                                         <Text size='md'>{comment.description}</Text>
                                     </li>

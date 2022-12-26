@@ -20,12 +20,10 @@ interface AuthFormProps{
     formTitle: string;
     submitFormButtonText: string;
     submitFormButtonAction: (auth:Auth) => void;
-    linkDescription: string;
-    routeName:string;
     showNameInput: boolean
 }
 
-function AuthForm({formTitle,submitFormButtonText,submitFormButtonAction,linkDescription}:AuthFormProps){
+function AuthForm({formTitle,submitFormButtonText,submitFormButtonAction}:AuthFormProps){
     const [user,setUser] = useState("");
     const [password,setPassword] = useState("");
 
@@ -66,7 +64,7 @@ function AuthForm({formTitle,submitFormButtonText,submitFormButtonAction,linkDes
             <Spacer />
             <Button onPress={()=>submitFormButtonAction({user,password})} title={submitFormButtonText} />
             <Spacer />
-            <Text style={styles.link}>{linkDescription}</Text>
+            
 
         </KeyboardAvoidingView>
     )

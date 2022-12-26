@@ -4,6 +4,7 @@ const upload = require('../lib/upload')
 
 exports.list = (req, res, next) => Promise.resolve()
   .then(() => Post.find({profile:req.user.profile._id}).populate('comments').populate('profile'))
+  .then((data) => console.log(data))
   .then((data) => (req.accepts(['html', 'json']) === 'json')
     ? res.json(data)
     : res.send({ posts: data })
@@ -20,7 +21,7 @@ exports.add = upload.concat([(req, res, next) => Promise.resolve()
   .catch(err => next(err))])
 
 exports.show = (req, res, next) => Promise.resolve()
-  .then(() => Post.findById(req.params.id).populate('comments').populate('profile'))
+  .then(() => Post.findOne({_id: req.params.id}).populate('comments').populate('profile'))
   .then((data) => {
     if (data) {
       
