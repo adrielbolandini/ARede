@@ -10,12 +10,7 @@ import React, { useState } from 'react';
 
 import {logo} from '../../../assets/images/icon.png';
 
-export interface Auth{
-    user: string;
-    password : string;
-    name ?: string;
-}
-
+import { Auth } from '../../../@types/auth';
 interface AuthFormProps{
     formTitle: string;
     submitFormButtonText: string;

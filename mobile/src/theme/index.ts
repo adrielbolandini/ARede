@@ -11,6 +11,9 @@ export const THEME = {
         CAPTION_300: "#D4D4D8",
 
         INPUT: "#7C7C8A",
+
+        ERROR: 'red',
+        BORDER: '#7C7C8A'
     },
     FONT_FAMILY:{
         REGULAR: 'Inter_400Regular',

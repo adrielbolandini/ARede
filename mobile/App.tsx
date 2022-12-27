@@ -15,7 +15,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Home } from './src/screens/Home';
 import { Friends } from './src/screens/Friends';
 import { Profile } from './src/screens/Profile';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import {
   Provider as AuthProvider,
   Context as AuthContext
@@ -30,7 +30,11 @@ const MyTheme = {
 }
 
 function App() {
-  const {token} = useContext(AuthContext);
+  const {token, tryLocalLogin} = useContext(AuthContext);
+
+  useEffect(()=>{
+    tryLocalLogin && tryLocalLogin(); 
+  }, [])
 
   const [fontsLoaded] = useFonts({
     Inter_400Regular,
@@ -76,7 +80,8 @@ function App() {
                   },
                   headerShown: false,
                   tabBarShowLabel: false,
-                  tabBarStyle:{backgroundColor: THEME.COLORS.BACKGROUND_800}
+                  tabBarStyle:{backgroundColor: THEME.COLORS.BACKGROUND_800},
+                  
                 })}>
                 <Tab.Screen name='Home' component={Home} />
                 <Tab.Screen name='Friends' component={Friends} />
