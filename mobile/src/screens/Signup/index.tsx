@@ -28,7 +28,7 @@ export function Signup({navigation}: SignupProps){
         <>
             <AuthForm 
             formTitle='Faça login para começar'
-            submitFormButtonText='Entrar'
+            submitFormButtonText='Cadastrar'
             submitFormButtonAction={handleSignup}
             showNameInput={true}
             />

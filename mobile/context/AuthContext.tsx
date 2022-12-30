@@ -4,6 +4,7 @@ import jwt_decode from 'jwt-decode';
 import * as SecureStore from 'expo-secure-store';
 import { Auth, UserToken } from "../@types/auth";
 import { Action } from "../@types/reduce";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 interface IAuthContextProps{
     token?: string | null,
@@ -23,6 +24,10 @@ const defaultValue = {
     profile: null,
     isLoading: true,
     errorMessage: null
+}
+
+interface logoutProps{
+    navigation: NativeStackNavigationProp<any,any>
 }
 
 const Context = React.createContext<IAuthContextProps>(defaultValue); 
@@ -112,7 +117,7 @@ const Provider = ({children} : {children: ReactNode}) =>{
         }
     }
 
-    const logout = async () =>{
+    const logout = async ({navigation}: logoutProps) =>{
         try {
             await SecureStore.deleteItemAsync('token');
             await SecureStore.deleteItemAsync('user');

@@ -34,8 +34,8 @@ module.exports = {
         .catch(err => next(err))
   ),
   newrelative: ((req,res,next)=>Promise.resolve()
-        .then(()=> Profile.findOneAndUpdate({_id:req.params.id},{$push:{followers: req.user.profile._id}}))
-        .then(()=> Profile.findOneAndUpdate({_id:req.user.profile._id},{$push:{following: req.params.id}}))
+        .then(()=> Profile.updateOne({_id:req.params.id},{$push:{followers: req.user.profile._id}}))
+        .then(()=> Profile.updateOne({_id:req.user.profile._id},{$push:{following: req.params.id}}))
         .then((data)=> res.status(200).json(data))
         .catch(err => next(err))
   )

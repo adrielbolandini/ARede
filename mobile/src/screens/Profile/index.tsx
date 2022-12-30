@@ -1,3 +1,4 @@
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { UserCircle } from 'phosphor-react-native';
 import React, {useContext} from 'react';
 import { Text, View } from 'react-native';
@@ -12,6 +13,7 @@ import { styles } from './styles';
 
 export function Profile(){
     const {user, logout} = useContext(AuthContext);
+
     return(
         <SafeAreaView style={styles.container}>
             <FocusAwareStatusBar 
