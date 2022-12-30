@@ -38,6 +38,12 @@ module.exports = {
         .then(()=> Profile.updateOne({_id:req.user.profile._id},{$push:{following: req.params.id}}))
         .then((data)=> res.status(200).json(data))
         .catch(err => next(err))
+  ),
+  unfollow: ((req,res,next)=>Promise.resolve()
+        .then(()=> Profile.updateOne({_id:req.params.id},{$pull:{followers: req.user.profile._id}}))
+        .then(()=> Profile.updateOne({_id:req.user.profile._id},{$pull:{following: req.params.id}}))
+        .then((data)=> res.status(200).json(data))
+        .catch(err => next(err))
   )
   
  }

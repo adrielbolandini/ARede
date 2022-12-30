@@ -49,6 +49,14 @@ router
   ProfileController.newrelative)
 
 router
+.route('/profile/unfollow/:id')
+.post(
+/**
+ *  #swagger.tags = ['Profile']
+*/
+ProfileController.unfollow)
+
+router
   .route('/feed')
   .get(
   /**

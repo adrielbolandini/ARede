@@ -49,6 +49,16 @@ export function Friends(){
         }
     }
 
+    async function handleUnfollow(profileId:string){
+        try{
+            const authHeader = await getAuthHeader();
+            await api.post(`v1/profile/unfollow/${profileId}`, null, authHeader);
+            getProfiles();
+        } catch (err){
+            console.error(err)
+        }
+    }
+
     useEffect(()=>{
         getProfiles && getProfiles();
     }, []);
@@ -70,10 +80,10 @@ export function Friends(){
                                         <Text style={styles.textName}>{item.name}</Text>
                                     </View>
                                     <TouchableOpacity style={styles.button}>
-                                        <Button onPress={()=>handleFollow(item._id)} title='Seguir' disabled={item.followButtonDisabled}/>
+                                        <Button onPress={()=>handleUnfollow(item._id)} title='Seguir' disabled={item.followButtonDisabled}/>
                                     </TouchableOpacity>
                                     <TouchableOpacity style={styles.button}>
-                                        <Button onPress={()=>handleFollow(item._id)} title='Deixar de seguir' disabled={!item.followButtonDisabled}/>
+                                        <Button onPress={()=>handleUnfollow(item._id)} title='Deixar de seguir' disabled={!item.followButtonDisabled}/>
                                     </TouchableOpacity>
                                 </Spacer>
                             </View>
